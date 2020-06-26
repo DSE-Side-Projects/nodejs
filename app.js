@@ -54,9 +54,9 @@ app.use(cookieParser());
 // config express-session
 var sess = {
   secret: 'CHANGE THIS SECRET',
-  cookie: {},
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { sameSite: false }
 };
 
 if (app.get('env') === 'production') {
