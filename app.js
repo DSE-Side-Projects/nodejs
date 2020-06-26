@@ -56,7 +56,7 @@ var sess = {
   secret: 'CHANGE THIS SECRET',
   resave: false,
   saveUninitialized: true,
-  cookie: { sameSite: false }
+  cookie: { sameSite: true }
 };
 
 if (app.get('env') === 'production') {
