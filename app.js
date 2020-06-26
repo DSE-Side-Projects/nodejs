@@ -21,7 +21,8 @@ var strategy = new Auth0Strategy(
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL:
-      process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
+      process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback',
+    state: true
   },
   function (accessToken, refreshToken, extraParams, profile, done) {
     // accessToken is the token to call Auth0 API (not needed in the most cases)
@@ -53,10 +54,10 @@ app.use(cookieParser());
 
 // config express-session
 var sess = {
-  secret: 'CHANGE THIS SECRET',
+  secret: '23iuh4jnkrwejo432o',
   resave: false,
   saveUninitialized: true,
-  cookie: { sameSite: true }
+  cookie: { secure: false, sameSite: true }
 };
 
 if (app.get('env') === 'production') {
@@ -69,7 +70,10 @@ if (app.get('env') === 'production') {
   // Ref: https://www.npmjs.com/package/express-session#cookiesecure
   // app.set('trust proxy', 1);
   
-  sess.cookie.secure = true; // serve secure cookies, requires https
+  sess.cookie.secure = true // serve secure cookies, requires https
+    sess.proxy = true
+    app.set('trust proxy', 1)
+  
 }
 
 app.use(session(sess));
